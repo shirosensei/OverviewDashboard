@@ -61,23 +61,23 @@ Charting Library: Chart.js or D3.js for dynamic visualizations.
 ### Installation
 
 #### Clone the Repository
-
+```bash
 git clone https://github.com/shirosensei/OverviewDashboard.git
 cd sales-dashboard
+```
 
 #### Install Dependencies
-
+```bash
 npm install
-
-Set Up Environment Variables
-Create a .env file in the root directory and add:
-
+```
+#### Set Up Environment Variables Create a .env file in the root directory and add:
+```bash
 VITE_APP_OPENAI_API_KEY=your_openai_api_key
 MONGO_URI=your_mongodb_connection_string
-PORT=your_port_number
+PORT=5137
+```
 
-Run the Application
-
+#### Run the Application
+```bash
 npm run dev
-
-The application will be accessible at http://localhost:5173.
+```
