@@ -3,7 +3,7 @@ import React from "react";
 const Sidebar = () => {
   return (
     <>
-      <aside className="border-box flex flex-col justify-between items-start p-0 gap-16 w-[60px] h-screen bg-[#115E56] border-r border-[#DCDFE4]">
+      <aside className="border-box flex flex-col justify-between items-start p-0 gap-16 h-screen bg-[#115E56] border-r border-[#DCDFE4]">
         <div className="flex flex-col justify-center items-center p-6 gap-8 w-[60px] h-[293.2px]">
           <div className="flex-none order-0 flex-grow-0">
             <svg
@@ -130,7 +130,7 @@ const Sidebar = () => {
           <div className="w-7 h-0 border border-[#134E48]"></div>
 
           <div className="flex-none order-1 flex-grow-0">
-            <nav className="flex flex-col justify-center items-center p-0 w-[36px] h-[152px]">
+            <nav className="flex flex-col justify-center items-center p-0 h-[152px]">
               <ul className="flex flex-col justify-center items-center p-2 gap-[22px] rounded-md group">
                 <li className="flex flex-col justify-center items-center p-2 gap-[22px] w-9 h-9 rounded-lg  hover:bg-teal-700">
                   <a href="#home" className="">
@@ -199,7 +199,8 @@ const Sidebar = () => {
         {/* <div className="flex-grow"></div> */}
 
         <div className="m-auto" aria-labelledby="settings">
-          <a className="flex flex-col justify-center items-center w-9 h-9 cursor-pointer rounded-lg hover:bg-teal-700">
+          <a href="#chats"
+          className="flex flex-col justify-center items-center w-auto h-auto cursor-pointer rounded-lg hover:bg-teal-700">
             <svg
               width="60"
               height="84"
