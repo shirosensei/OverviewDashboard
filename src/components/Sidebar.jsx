@@ -10,15 +10,15 @@ const Sidebar = () => {
         {!isOpen && (
           <button
             onClick={() => setIsOpen(true)}
-            className="fixed top-1/2 -translate-y-1/2 left-0 h-12 bg-[#CCFBEF] text-[#667085] rounded-r flex items-center justify-center md:hidden z-50"
+            className="fixed top-1/2 -translate-y-1/2 left-0 h-12 bg-[#115E56] text-[#CCFBEF] rounded-r flex items-center justify-center md:hidden z-50"
           >
             <ChevronRight size={24} />
           </button>
         )}
 
         <aside
-          className={`fixed md:relative p-0 w-[60px] h-full bg-[#115E56] border-r border-[#DCDFE4] transform transition-transform duration-300 md:translate-x-0 ${
-            isOpen ? "relative translate-x-0" : " -translate-x-full"
+          className={`fixed top-0 p-0 w-[60px] h-full bg-[#115E56] border-r border-[#DCDFE4] transform transition-transform duration-300 md:translate-x-0 ${
+            isOpen ? "translate-x-0" : " -translate-x-full"
           } `}
         >
           <div className="relative flex items-center justify-center flex-col gap-14">
