@@ -71,6 +71,7 @@ cd sales-dashboard
 npm install
 ```
 #### Set Up Environment Variables Create a .env file in the root directory and add:
+
 ```bash
 VITE_APP_OPENAI_API_KEY=your_openai_api_key
 MONGO_URI=your_mongodb_connection_string
