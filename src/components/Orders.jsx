@@ -3,7 +3,7 @@ import * as echarts from "echarts";
 
 const initialOrders = [
   {
-    product: "Product A",
+    product: "Product Name A",
     date: "2024-04-24",
     time: "10:23 AM",
     timeSpent: "2h 5m",
@@ -11,7 +11,7 @@ const initialOrders = [
     commission: 15,
   },
   {
-    product: "Product B",
+    product: "Product Name B",
     date: "2022-04-25",
     time: "11:15 AM",
     timeSpent: "1.5h 2m",
@@ -19,7 +19,7 @@ const initialOrders = [
     commission: 20,
   },
   {
-    product: "Product C",
+    product: "Product Name C",
     date: "2023-04-26",
     time: "12:30 PM",
     timeSpent: "3h 5m",
@@ -27,7 +27,7 @@ const initialOrders = [
     commission: 30,
   },
   {
-    product: "Product D",
+    product: "Product Name D",
     date: "2024-04-27",
     time: "1:45 PM",
     timeSpent: "1h 25m",
@@ -35,7 +35,7 @@ const initialOrders = [
     commission: 10,
   },
   {
-    product: "Product E",
+    product: "Product Name E",
     date: "2024-04-28",
     time: "2:00 PM",
     timeSpent: "2.5h 5m",
@@ -43,7 +43,7 @@ const initialOrders = [
     commission: 25,
   },
   {
-    product: "Product F",
+    product: "Product Name F",
     date: "2024-04-29",
     time: "3:15 PM",
     timeSpent: "4h 29m",
@@ -51,52 +51,140 @@ const initialOrders = [
     commission: 40,
   },
   {
-    product: "Product G",
+    product: "Product Name G",
     date: "2024-04-30",
     time: "4:30 PM",
     timeSpent: "15h 3m",
     orderValue: 150,
     commission: 15,
   },
+  {
+    product: "Product Name H",
+    date: "2024-05-01",
+    time: "5:00 PM",
+    timeSpent: "2 hours",
+    orderValue: 220,
+    commission: 22,
+  },
+  {
+    product: "Product I",
+    date: "2024-05-02",
+    time: "6:00 PM",
+    timeSpent: "3 hours",
+    orderValue: 320,
+    commission: 32,
+  },
+  {
+    product: "Product Name J",
+    date: "2024-05-03",
+    time: "7:00 PM",
+    timeSpent: "1 hour",
+    orderValue: 90,
+    commission: 9,
+  },
+  {
+    product: "Product K",
+    date: "2024-05-04",
+    time: "8:00 PM",
+    timeSpent: "2 hours",
+    orderValue: 250,
+    commission: 25,
+  },
+  {
+    product: "Product Name L",
+    date: "2024-05-05",
+    time: "9:00 PM",
+    timeSpent: "15h 8m",
+    orderValue: 300,
+    commission: 30,
+  },
 ];
 
-
-    const formatDateTime = (dateString) => {
-        const date = new Date(dateString);
-        const options = { day: '2-digit', month: 'short', year: 'numeric' };
-        const formattedDate = date.toLocaleDateString('en-GB', options).replace(',', '');
-        return formattedDate.replace(' ', ' '); // Replace space before year with a typographic quote
-      };
+// Fuction to display formatted date
+const formatDateTime = (dateString) => {
+  const date = new Date(dateString);
+  const options = { day: "2-digit", month: "short", year: "numeric" };
+  const formattedDate = date
+    .toLocaleDateString("en-GB", options)
+    .replace(",", "");
+  return formattedDate.replace(" ", " "); // Replace space before year with a typographic quote
+};
 
 const OrderSection = () => {
-  const [searchProduct, setSearchProduct] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const [orders, setOrders] = useState(initialOrders);
-
-  //   Function to handle change in search input field
-  const handleSearchChange = (event) => {
-    console.log(event.target.value);
-    const value = event.target.value.toLowerCase();
-    setSearchProduct(value);
-  };
+  const [pageSize, setPageSize] = useState(5);
+  const [currentPage, setCurrentPage] = useState(1);
 
   // Function to filter search products
-  const filteredOrders = orders.filter(
-    (order) =>
-      order.product.toLowerCase().includes(searchProduct) ||
-      order.date.toLowerCase().includes(searchProduct)
-  );
+  const filteredOrders = React.useMemo(() => {
+    return orders.filter(
+      (order) =>
+        order.product.toLowerCase().includes(searchTerm) ||
+        order.date.toLowerCase().includes(searchTerm)
+    );
+  }, [orders, searchTerm]);
+
+  const totalOrders = filteredOrders.length;
+  const displayedOrders =
+    pageSize === "all"
+      ? filteredOrders
+      : filteredOrders.slice(
+          (currentPage - 1) * Number(pageSize),
+          currentPage * Number(pageSize)
+        );
+
+  const totalPages =
+    pageSize === "all" ? 1 : Math.ceil(totalOrders / Number(pageSize));
+
+  //   Function to handle page size change
+  const handlePageSizeChange = (event) => {
+    setPageSize(event.target.value);
+    setCurrentPage(1);
+  };
+
+  //   Function to handle change in search input field
+  const handleSearch = (event) => {
+    const value = event.target.value.toLowerCase();
+    setSearchTerm(value);
+    setCurrentPage(1);
+  };
+
+  const nextPage = () => {
+    if (currentPage < totalPages) {
+      //   setCurrentPage((prev) => prev + 1);
+      setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      //   setCurrentPage((prev) => prev - 1);
+      setCurrentPage((prev) => Math.max(prev - 1, 1));
+    }
+  };
 
   return (
     <div>
       <div className="flex justify-between items-center p-4">
-        <h1 className="text-2xl font-bold">Orders</h1>
         <input
           type="text"
           placeholder="Search Product"
-          className="p-2 border border-gray-300 rounded-lg"
-          value={searchProduct}
-          onChange={handleSearchChange}
+          className="p-2 border border-gray-300 rounded-lg ring-0 ring-gray-300 w-1/4"
+          value={searchTerm}
+          onChange={handleSearch}
         />
+
+        <select
+          className="flex items-center w-[97px] h-[36px] font-inter font-normal text-lg leading-5 text-[#212636] border rounded"
+          aria-label="Page Size"
+          value={pageSize}
+          onChange={handlePageSizeChange}
+        >
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="all">All</option>
+        </select>
       </div>
       {/* <table className="box-border flex flex-col items-start p-0 bg-white w-full shadow-custom rounded">
         <thead className="box-border flex flex-row items-center p-0 isolate w-[1252px] bg-[#F9FAFB] border border-gray-300">
@@ -122,8 +210,8 @@ const OrderSection = () => {
         
     </table> */}
 
-      <div className=" mx-auto p-4">
-        <div className="bg-white border border-gray-300 rounded-lg shadow-md">
+      <div className=" mx-auto p-4 overflow-x-auto">
+        <div className="bg-white border border-gray-300 rounded-lg shadow-md min-w-[252px] ">
           <div className="flex bg-gray-100 border-b border-gray-300">
             <div className="flex-1 p-4">
               <span className="font-inter not-italic font-normal text-sm leading-5 text-[#667085] tracking-widest">
@@ -152,9 +240,9 @@ const OrderSection = () => {
             </div>
             <div className="flex-1 p-4 text-left ">&nbsp;</div>
           </div>
-          {filteredOrders.map((order, index) => (
-            <div key={index} className="flex bg-white border-gray-300">
-              <div className="flex justify-start items-center flex-1 p-4">
+          {displayedOrders.map((order, index) => (
+            <div key={index} className="flex bg-white border-gray-300 overflow-x-auto">
+              <div className="flex justify-start items-center flex-1  py-[15px] px-4">
                 {/* // eslint-disable-next-line react/no-unknown-property */}
                 <svg
                   width="40"
@@ -162,6 +250,7 @@ const OrderSection = () => {
                   viewBox="0 0 40 40"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
+                  className="mr-4"
                   //   xmlns:xlink="http://www.w3.org/1999/xlink"
                 >
                   <rect
@@ -213,17 +302,26 @@ const OrderSection = () => {
                     />
                   </defs>
                 </svg>
-                {order.product}
+                <span className="font-inter font-normal text-base leading-6 text-[#212636] ">
+                  {order.product}
+                </span>
               </div>
-              <div className="flex-1 p-4 text-[#212636]">{formatDateTime(order.date)}
-                <p className="font-inter not-italic font-normal text-xs leading-5 flex items-center ">{order.time}</p>
+              <div className="flex-1 p-4  text-[#212636]">
+                {formatDateTime(order.date)}
+                <p className="font-inter not-italic font-normal text-xs leading-5 flex items-center ">
+                  {order.time}
+                </p>
               </div>
               <div className="flex-1 p-4 ">{order.timeSpent}</div>
               <div className="flex-1 p-4 ">${order.orderValue.toFixed(2)}</div>
-              <div className="flex-1 p-4">${order.commission.toFixed(2)}</div>
+              <div className="flex-1 p-4 ">
+                <span className="font-inter font-bold text-base text-[#212636] leading-6">
+                  ${order.commission}
+                </span>
+              </div>
               <a
                 href="#/"
-                className="flex-1 flex flex-row justify-center gap-2 p-4 text-right"
+                className="flex-1 flex flex-row justify-center gap-2 p-4 text-right "
               >
                 View Chat
                 <svg
@@ -242,6 +340,37 @@ const OrderSection = () => {
             </div>
           ))}
         </div>
+        {totalOrders === 0 && (
+          <div className="text-center py-4 text-gray-500">
+            No orders found matching your search.
+          </div>
+        )}
+      </div>
+      <div></div>
+      {pageSize !== "all" && (
+        <div className="text-sm text-center text-gray-500">
+          Page {currentPage} of {totalPages}
+        </div>
+      )}
+      <div className="flex justify-center gap-4 py-4">
+        {pageSize !== "all" && totalOrders > 0 && (
+          <div className="flex justify-end items-end gap-2">
+            <button
+              onClick={prevPage}
+              disabled={currentPage === 1}
+              className="px-3 py-2 rounded border border-[#CCFBEF] bg-gray-200 hover:bg-[#CCFBEF] disabled:opacity-50 disabled:hover:bg-gray-100"
+            >
+              Previous
+            </button>
+            <button
+              onClick={nextPage}
+              disabled={currentPage === totalPages}
+              className="px-3 py-2 rounded bg-gray-200 hover:bg-[#CCFBEF] disabled:opacity-50 disabled:hover:bg-gray-100"
+            >
+              Next
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
