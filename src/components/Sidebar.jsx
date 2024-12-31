@@ -10,6 +10,7 @@ const Sidebar = () => {
         {!isOpen && (
           <button
             onClick={() => setIsOpen(true)}
+            aria-label="open sidebar"
             className="fixed top-1/2 -translate-y-1/2 left-0 h-12 bg-[#115E56] text-[#CCFBEF] rounded-r flex items-center justify-center md:hidden z-50"
           >
             <ChevronRight size={24} />
@@ -17,13 +18,15 @@ const Sidebar = () => {
         )}
 
         <aside
-          className={`fixed top-0 p-0 w-[60px] h-full bg-[#115E56] border-r border-[#DCDFE4] transform transition-transform duration-300 md:translate-x-0 ${
+          className={`fixed top-0 p-0 w-[60px] h-full bg-[#115E56] border-r border-[#DCDFE4] z-50 transform transition-transform duration-300 md:translate-x-0 ${
             isOpen ? "translate-x-0" : " -translate-x-full"
           } `}
         >
           <div className="relative flex items-center justify-center flex-col gap-14">
             <button
               onClick={() => setIsOpen(false)}
+              aria-label="close sidebar"
+
               className="absolute right-0 top-1/2 text-[#667085] h-10 bg-[#CCFBEF] rounded-l flex items-center justify-center md:hidden"
             >
               <ChevronLeft size={24} />
@@ -157,7 +160,7 @@ const Sidebar = () => {
                 <nav className="flex flex-col justify-center items-center p-0">
                   <ul className="flex flex-col justify-center items-center p-2 gap-[22px] rounded-md group">
                     <li className="flex flex-col justify-center items-center p-2 gap-[22px] w-9 h-9 rounded-lg  hover:bg-teal-700">
-                      <a href="#home" className="">
+                      <a href="#home" title="home" aria-label="home" className="bg-teal-700 focus:bg-teal-700">
                         <svg
                           width="36"
                           height="37"
@@ -182,7 +185,7 @@ const Sidebar = () => {
                       </a>
                     </li>
                     <li className="flex flex-col justify-center items-center p-2 gap-[22px] w-9 h-9 rounded-lg  hover:bg-teal-700">
-                      <a href="#chat">
+                      <a href="#chat" title="chat" aria-label="chat" className="focus:bg-teal-700">
                         <svg
                           width="36"
                           height="37"
@@ -200,7 +203,7 @@ const Sidebar = () => {
                       </a>
                     </li>
                     <li className="flex flex-col justify-center items-center p-2 gap-[22px] w-9 h-9 rounded-lg hover:bg-teal-700">
-                      <a href="#sales" className="">
+                      <a href="#sales" aria-label="sales" title="sales" className="focus:bg-teal-700"> 
                         <svg
                           width="36"
                           height="37"
@@ -222,17 +225,21 @@ const Sidebar = () => {
 
             <div className="flex flex-grow invisible space-y-6 p-4 mb-24"></div>
 
-            <button
+            {/* <button
               className="cursor-pointer w-none m-auto"
               aria-labelledby="settings"
-            >
-              <a href="#settings" className="">
+            > */}
+            <div className="flex w-[68px] h-auto">
+
+           
+              <a href="#settings" className="focus:bg-teal-700" title="settings" aria-label="settings">
                 <svg
                   width="50"
                   height="50"
                   viewBox="0 0 50 50"
                   fill="currentcolor"
                   xmlns="http://www.w3.org/2000/svg"
+                  className="flex items-center justify-center"
                 >
                   <path
                     d="M36.875 42.1687C36.8781 42.0562 36.8781 41.9437 36.875 41.8312L38.0406 40.375C38.1017 40.2985 38.1441 40.2088 38.1641 40.113C38.1842 40.0172 38.1815 39.918 38.1563 39.8234C37.9648 39.1052 37.679 38.4156 37.3063 37.7726C37.2574 37.6885 37.1896 37.6169 37.1082 37.5636C37.0268 37.5103 36.9341 37.4768 36.8375 37.4656L34.9844 37.2594C34.9073 37.1781 34.8292 37.1 34.75 37.025L34.5313 35.1672C34.52 35.0705 34.4863 34.9777 34.4329 34.8963C34.3794 34.8149 34.3077 34.7472 34.2234 34.6984C33.5805 34.326 32.8908 34.0406 32.1727 33.85C32.0781 33.8247 31.9789 33.822 31.8831 33.8421C31.7873 33.8622 31.6976 33.9045 31.6211 33.9656L30.1688 35.125C30.0563 35.125 29.9438 35.125 29.8313 35.125L28.375 33.9617C28.2985 33.9006 28.2088 33.8583 28.113 33.8382C28.0172 33.8181 27.918 33.8208 27.8234 33.8461C27.1053 34.0375 26.4157 34.3233 25.7727 34.6961C25.6885 34.7449 25.617 34.8127 25.5637 34.8941C25.5104 34.9755 25.4768 35.0682 25.4656 35.1648L25.2594 37.0211C25.1781 37.0987 25.1 37.1768 25.025 37.2554L23.1672 37.4687C23.0705 37.48 22.9777 37.5137 22.8964 37.5671C22.815 37.6205 22.7472 37.6923 22.6984 37.7765C22.3261 38.4196 22.0405 39.1092 21.8492 39.8273C21.8241 39.9219 21.8215 40.0212 21.8417 40.117C21.8619 40.2128 21.9044 40.3025 21.9656 40.3789L23.125 41.8312C23.125 41.9437 23.125 42.0562 23.125 42.1687L21.9617 43.625C21.9006 43.7014 21.8583 43.7912 21.8382 43.887C21.8181 43.9828 21.8208 44.082 21.8461 44.1765C22.0375 44.8947 22.3234 45.5843 22.6961 46.2273C22.7449 46.3114 22.8128 46.383 22.8941 46.4363C22.9755 46.4896 23.0682 46.5232 23.1648 46.5344L25.018 46.7406C25.0956 46.8219 25.1737 46.9 25.2523 46.975L25.4688 48.8328C25.48 48.9295 25.5137 49.0222 25.5671 49.1036C25.6206 49.185 25.6923 49.2528 25.7766 49.3015C26.4197 49.6739 27.1093 49.9595 27.8273 50.1508C27.922 50.1759 28.0212 50.1785 28.117 50.1583C28.2128 50.1381 28.3025 50.0956 28.3789 50.0344L29.8313 48.875C29.9438 48.8781 30.0563 48.8781 30.1688 48.875L31.625 50.0406C31.7015 50.1017 31.7912 50.144 31.887 50.1641C31.9828 50.1842 32.082 50.1815 32.1766 50.1562C32.8948 49.9651 33.5845 49.6793 34.2274 49.3062C34.3115 49.2574 34.383 49.1896 34.4363 49.1082C34.4896 49.0268 34.5232 48.9341 34.5344 48.8375L34.7406 46.9844C34.8219 46.9073 34.9 46.8291 34.975 46.75L36.8328 46.5312C36.9295 46.52 37.0223 46.4863 37.1037 46.4328C37.185 46.3794 37.2528 46.3077 37.3016 46.2234C37.674 45.5803 37.9595 44.8907 38.1508 44.1726C38.1759 44.078 38.1785 43.9788 38.1583 43.883C38.1381 43.7872 38.0956 43.6975 38.0344 43.6211L36.875 42.1687ZM30 45.125C29.3819 45.125 28.7778 44.9417 28.2638 44.5983C27.7499 44.2549 27.3494 43.7669 27.1129 43.1959C26.8764 42.6248 26.8145 41.9965 26.9351 41.3903C27.0556 40.7841 27.3533 40.2273 27.7903 39.7903C28.2273 39.3532 28.7842 39.0556 29.3903 38.935C29.9965 38.8144 30.6249 38.8763 31.1959 39.1129C31.7669 39.3494 32.255 39.7499 32.5983 40.2638C32.9417 40.7777 33.125 41.3819 33.125 42C33.125 42.8288 32.7958 43.6236 32.2097 44.2097C31.6237 44.7957 30.8288 45.125 30 45.125Z"
@@ -240,7 +247,8 @@ const Sidebar = () => {
                   />
                 </svg>
               </a>
-            </button>
+            {/* </button> */}
+            </div>
           </div>
         </aside>
       </div>
