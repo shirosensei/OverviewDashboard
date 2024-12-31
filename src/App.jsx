@@ -1,121 +1,59 @@
-import { useState } from "react";
+import React, { useEffect, Suspense, lazy } from "react";
+const MyChart = lazy(() => import("./components/MyChart"));
+const Forecast = lazy(() => import("./components/Forecast"));
+const Orders = lazy(() => import("./components/Orders"));
+const Header = lazy(() => import("./components/Header"));
+const ConsultationsChart = lazy(() => import("./components/ConsultationsChart"));
+
 import "./assets/css/App.css";
 import Sidebar from "./components/Sidebar";
 
 function App() {
+
+  useEffect(() => {
+    // Passive scroll
+    document.title = "Dashboard";
+    // document.body.style.overflow = "auto";
+
+    const handleScroll = (event) => {
+      // console.log("Scrolling...", event);
+      // Your scroll handling logic here
+    };
+
+    // Add the event listener with passive option
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    // Cleanup function to remove the event listener
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
     <>
       <div className="flex">
         <Sidebar />
 
-        <main className="flex flex-col flex-1">
+        <main className="flex-1 md:ml-14">
           <div className="flex-none order-1 flex-grow-0"></div>
           {/* Frame 1116606648 */}
-          <div className="flex flex-row items-center py-6 px-10 gap-2 border-b border-[#DCDFE4]">
-            <div className="flex-none order-0 self-stretch flex-grow-0">
-              <div className="flex flex-col justify-center items-center py-3 px-0 gap-3 w-[137px] h-[46px] bg-[#CCFBEF] rounded-[1200px]">
-                <div className="flex-none order-0 flex-grow-0">
-                  <div className="flex flex-row items-center py-0 px-3 w-[137px] h-[22px]">
-                    <div className="flex-none order-0 flex-grow-0">
-                      <a
-                        href="#summary"
-                        className="flex flex-row gap-2 justify-center items-center"
-                      >
-                        <svg
-                          width="20"
-                          height="20"
-                          viewBox="0 0 20 20"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M7.81249 9.09609C7.90753 9.04123 7.98644 8.96231 8.04129 8.86727C8.09615 8.77223 8.12502 8.66442 8.12499 8.55469V2.92969C8.12443 2.83004 8.10006 2.73198 8.0539 2.64367C8.00774 2.55536 7.94113 2.47936 7.85964 2.42202C7.77814 2.36469 7.68412 2.32766 7.5854 2.31405C7.48669 2.30043 7.38616 2.31062 7.29218 2.34375C5.46794 2.98939 3.93383 4.26457 2.96563 5.94005C1.99743 7.61554 1.65863 9.58145 2.01015 11.4844C2.02837 11.5828 2.06995 11.6754 2.1314 11.7544C2.19285 11.8333 2.27237 11.8964 2.36327 11.9383C2.44519 11.9766 2.53456 11.9963 2.62499 11.9961C2.73469 11.9961 2.84247 11.9673 2.93749 11.9125L7.81249 9.09609ZM6.87499 3.87656V8.19375L3.13437 10.3523C3.12499 10.2344 3.12499 10.1156 3.12499 10C3.1261 8.73309 3.47678 7.49106 4.13843 6.41066C4.80007 5.33025 5.74701 4.45337 6.87499 3.87656ZM18.125 10C18.1256 11.7837 17.5393 13.518 16.4564 14.9354C15.3735 16.3528 13.8543 17.3745 12.1332 17.8428C10.4121 18.3111 8.58472 18.2 6.93298 17.5267C5.28125 16.8534 3.89698 15.6553 2.99374 14.1172C2.95164 14.0461 2.92403 13.9675 2.91251 13.8857C2.901 13.8039 2.9058 13.7207 2.92665 13.6407C2.9475 13.5608 2.98398 13.4859 3.03398 13.4201C3.08398 13.3544 3.14651 13.2992 3.21796 13.2578L9.37499 9.67422V2.5C9.37499 2.33424 9.44084 2.17527 9.55805 2.05806C9.67526 1.94085 9.83423 1.875 9.99999 1.875C11.4179 1.87572 12.8109 2.24729 14.0408 2.95282C15.2706 3.65834 16.2946 4.67328 17.0109 5.89688C17.0195 5.90938 17.0273 5.92188 17.0351 5.93516C17.043 5.94844 17.0508 5.96406 17.0578 5.97812C17.7588 7.20247 18.1268 8.58916 18.125 10Z"
-                            fill="#212636"
-                          />
-                        </svg>
-                        <h6 className="flex items-center font-inter not-italic font-medium text-lg leading-5 tracking-tight text-[#212636]">
-                          Summary
-                        </h6>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col items-start py-3 px-0 gap-3 w-[102px] h-[46px]">
-              <div className="flex-none order-1 self-stretch flex-grow-0">
-                <div className="flex flex-col items-center py-0 px-3 gap-3">
-                  <div className="flex-none order-0 flex-grow-0">
-                    <a
-                      href="#sales"
-                      className="flex flex-row gap-2 justify-center items-center text-[#8A94A6] hover:text-gray-800 hover:rounded-[1200px]"
-                    >
-                      <svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg"
-                        stroke="currentColor"
-                        strokeWidth={0}
-                      >
-                        <path
-                          d="M19.0086 10.625L11.25 2.86641C11.1343 2.74983 10.9967 2.65741 10.845 2.59451C10.6933 2.5316 10.5306 2.49948 10.3664 2.50001H3.125C2.95924 2.50001 2.80027 2.56585 2.68306 2.68306C2.56585 2.80027 2.5 2.95925 2.5 3.12501V10.3664C2.49948 10.5306 2.5316 10.6933 2.5945 10.845C2.6574 10.9967 2.74983 11.1344 2.86641 11.25L10.625 19.0086C10.7411 19.1247 10.8789 19.2168 11.0306 19.2796C11.1822 19.3425 11.3448 19.3748 11.509 19.3748C11.6732 19.3748 11.8357 19.3425 11.9874 19.2796C12.1391 19.2168 12.2769 19.1247 12.393 19.0086L19.0086 12.393C19.1247 12.2769 19.2168 12.1391 19.2796 11.9874C19.3425 11.8357 19.3748 11.6732 19.3748 11.509C19.3748 11.3448 19.3425 11.1822 19.2796 11.0306C19.2168 10.8789 19.1247 10.7411 19.0086 10.625ZM6.5625 7.50001C6.37708 7.50001 6.19582 7.44502 6.04165 7.34201C5.88748 7.239 5.76732 7.09258 5.69636 6.92127C5.62541 6.74997 5.60684 6.56147 5.64301 6.37961C5.67919 6.19775 5.76848 6.03071 5.89959 5.89959C6.0307 5.76848 6.19775 5.67919 6.3796 5.64302C6.56146 5.60685 6.74996 5.62541 6.92127 5.69637C7.09257 5.76733 7.23899 5.88749 7.342 6.04166C7.44502 6.19583 7.5 6.37709 7.5 6.56251C7.5 6.81115 7.40123 7.0496 7.22541 7.22542C7.0496 7.40123 6.81114 7.50001 6.5625 7.50001Z"
-                          fill="currentColor"
-                        />
-                      </svg>
-
-                      <h6 className="flex items-center font-inter font-medium not-italic text-lg leading-5 tracking-tight">
-                        Sales
-                      </h6>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col items-start py-3 px-0 w-[106px] h-[46px]">
-              <div className="flex-none order-2 self-stretch flex-grow-0">
-                <div className="flex flex-row items-center py-0 px-3 gap-3 w-[106px] h-[22px]">
-                  <a
-                    href="#chats"
-                    className="flex flex-row gap-2 justify-center items-center text-[#8A94A6] hover:text-gray-800 hover:rounded-[1200px]"
-                  >
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      stroke="currentColor"
-                      strokeWidth={0}
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M10.3125 1.875C8.24119 1.87727 6.25538 2.70111 4.79074 4.16574C3.32611 5.63038 2.50227 7.61619 2.5 9.6875V16.2758C2.50041 16.6003 2.62953 16.9115 2.85902 17.141C3.08852 17.3705 3.39966 17.4996 3.72422 17.5H10.3125C12.3845 17.5 14.3716 16.6769 15.8368 15.2118C17.3019 13.7466 18.125 11.7595 18.125 9.6875C18.125 7.6155 17.3019 5.62836 15.8368 4.16323C14.3716 2.6981 12.3845 1.875 10.3125 1.875ZM12.5 11.875H7.5C7.33424 11.875 7.17527 11.8092 7.05806 11.6919C6.94085 11.5747 6.875 11.4158 6.875 11.25C6.875 11.0842 6.94085 10.9253 7.05806 10.8081C7.17527 10.6908 7.33424 10.625 7.5 10.625H12.5C12.6658 10.625 12.8247 10.6908 12.9419 10.8081C13.0592 10.9253 13.125 11.0842 13.125 11.25C13.125 11.4158 13.0592 11.5747 12.9419 11.6919C12.8247 11.8092 12.6658 11.875 12.5 11.875ZM12.5 9.375H7.5C7.33424 9.375 7.17527 9.30915 7.05806 9.19194C6.94085 9.07473 6.875 8.91576 6.875 8.75C6.875 8.58424 6.94085 8.42527 7.05806 8.30806C7.17527 8.19085 7.33424 8.125 7.5 8.125H12.5C12.6658 8.125 12.8247 8.19085 12.9419 8.30806C13.0592 8.42527 13.125 8.58424 13.125 8.75C13.125 8.91576 13.0592 9.07473 12.9419 9.19194C12.8247 9.30915 12.6658 9.375 12.5 9.375Z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                    <h6 className="flex items-center font-inter not-italic font-medium text-lg leading-5 tracking-tight">
-                      Chats
-                    </h6>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Header />
+          </Suspense>
 
           <div className="flex items-start p-0 m-9">
             <section className="flex bg-white shadow-custom rounded-[20px] w-full">
               <div className="flex flex-col items-start p-0 w-full md:flex-col">
                 <div className="flex px-6 pt-8 pb-4 gap-6 w-full">
                   <div className="flex items-center justify-between w-full p-0 gap-6">
-                    <h4 className="flex items-center font-inter font-medium text-[32px] tracking-tight leading-8 text-[#212636] tracking-[-0.02em]">
+                    <h2 className="font-inter font-medium text-[32px] leading-9 text-[#212636] tracking-[-0.02em]">
                       At a glance
-                    </h4>
+                    </h2>
 
                     <div className="flex flex-row items-center gap-4">
                       <select
                         name="date"
                         id=""
+                        aria-label="date"
                         className="flex items-center w-[97px] h-[36px] font-inter font-normal text-lg leading-5 text-[#212636] border rounded"
                       >
                         <option value="7 days">7 days</option>
@@ -125,7 +63,7 @@ function App() {
                     </div>
                   </div>
                 </div>
-                <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 md:py-2 md:p-7 p-5 w-full overflow-hidden">
+                <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 md:py-2 md:p-7 p-5 w-full ">
                   {/* <div className="flex-none order-1 self-stretch flex-grow-0"> */}
                   {/* <div className="p-0 w-full"> */}
                   <div className="flex items-center order-0 self-stretch flex-grow-0 py-7 shadow-custom rounded-[20px]">
@@ -152,9 +90,9 @@ function App() {
 
                       <div className="flex-none order-1 flex-grow-1 py-1">
                         <div className="flex flex-row items-center gap-2">
-                          <h6 className=" font-inter font-normal not-italic text-[32px] leading-5 text-[#212636]">
+                          <h2 className=" font-inter font-normal not-italic text-[32px] leading-5 text-[#212636]">
                             24
-                          </h6>
+                          </h2>
                         </div>
                       </div>
 
@@ -210,9 +148,9 @@ function App() {
 
                       <div className="flex-none order-1 flex-grow-1 py-1">
                         <div className="flex flex-row items-center gap-2">
-                          <h6 className=" font-inter font-normal not-italic text-[32px] leading-5 text-[#212636]">
+                          <h2 className=" font-inter font-normal not-italic text-[32px] leading-5 text-[#212636]">
                             12
-                          </h6>
+                          </h2>
                         </div>
                       </div>
 
@@ -269,9 +207,9 @@ function App() {
 
                       <div className="flex-none order-1 flex-grow-1 py-1">
                         <div className="flex flex-row items-center gap-2">
-                          <h6 className=" font-inter font-normal not-italic text-[32px] leading-5 text-[#212636]">
+                          <h2 className=" font-inter font-normal not-italic text-[32px] leading-5 text-[#212636]">
                             50%
-                          </h6>
+                          </h2>
                         </div>
                       </div>
 
@@ -308,7 +246,7 @@ function App() {
                     <div className="flex flex-col items-start p-0 gap-2 w-full pl-6">
                       <div className="flex-none order-0 flex-grow-1">
                         <div className="flex flex-row items-center gap-2">
-                        <svg
+                          <svg
                             width="12"
                             height="12"
                             viewBox="0 0 12 12"
@@ -329,19 +267,26 @@ function App() {
 
                       <div className="flex-none order-1 flex-grow-1 py-1">
                         <div className="flex flex-row items-center gap-2">
-                          <h6 className=" font-inter font-normal not-italic text-[32px] leading-5 text-[#212636]">
+                          <h2 className=" font-inter font-normal not-italic text-[32px] leading-5 text-[#212636]">
                             $2,400
-                          </h6>
+                          </h2>
                         </div>
                       </div>
 
                       <div className="flex-none order-1 flex-grow-0">
                         <div className="flex flex-row items-start p-0 gap-2">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M22.5 11.25V5.25C22.5 5.05109 22.421 4.86032 22.2803 4.71967C22.1397 4.57902 21.9489 4.5 21.75 4.5H15.75C15.5511 4.5 15.3603 4.57902 15.2197 4.71967C15.079 4.86032 15 5.05109 15 5.25C15 5.44891 15.079 5.63968 15.2197 5.78033C15.3603 5.92098 15.5511 6 15.75 6H19.9397L12.75 13.1897L9.53062 9.96937C9.46097 9.89964 9.37825 9.84432 9.2872 9.80658C9.19615 9.76884 9.09856 9.74941 9 9.74941C8.90144 9.74941 8.80384 9.76884 8.71279 9.80658C8.62174 9.84432 8.53903 9.89964 8.46937 9.96937L1.71937 16.7194C1.57864 16.8601 1.49958 17.051 1.49958 17.25C1.49958 17.449 1.57864 17.6399 1.71937 17.7806C1.8601 17.9214 2.05097 18.0004 2.25 18.0004C2.44902 18.0004 2.63989 17.9214 2.78062 17.7806L9 11.5603L12.2194 14.7806C12.289 14.8504 12.3717 14.9057 12.4628 14.9434C12.5538 14.9812 12.6514 15.0006 12.75 15.0006C12.8486 15.0006 12.9462 14.9812 13.0372 14.9434C13.1283 14.9057 13.211 14.8504 13.2806 14.7806L21 7.06031V11.25C21 11.4489 21.079 11.6397 21.2197 11.7803C21.3603 11.921 21.5511 12 21.75 12C21.9489 12 22.1397 11.921 22.2803 11.7803C22.421 11.6397 22.5 11.4489 22.5 11.25Z" fill="#15B79F"/>
-</svg>
-
-                          
+                          <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M22.5 11.25V5.25C22.5 5.05109 22.421 4.86032 22.2803 4.71967C22.1397 4.57902 21.9489 4.5 21.75 4.5H15.75C15.5511 4.5 15.3603 4.57902 15.2197 4.71967C15.079 4.86032 15 5.05109 15 5.25C15 5.44891 15.079 5.63968 15.2197 5.78033C15.3603 5.92098 15.5511 6 15.75 6H19.9397L12.75 13.1897L9.53062 9.96937C9.46097 9.89964 9.37825 9.84432 9.2872 9.80658C9.19615 9.76884 9.09856 9.74941 9 9.74941C8.90144 9.74941 8.80384 9.76884 8.71279 9.80658C8.62174 9.84432 8.53903 9.89964 8.46937 9.96937L1.71937 16.7194C1.57864 16.8601 1.49958 17.051 1.49958 17.25C1.49958 17.449 1.57864 17.6399 1.71937 17.7806C1.8601 17.9214 2.05097 18.0004 2.25 18.0004C2.44902 18.0004 2.63989 17.9214 2.78062 17.7806L9 11.5603L12.2194 14.7806C12.289 14.8504 12.3717 14.9057 12.4628 14.9434C12.5538 14.9812 12.6514 15.0006 12.75 15.0006C12.8486 15.0006 12.9462 14.9812 13.0372 14.9434C13.1283 14.9057 13.211 14.8504 13.2806 14.7806L21 7.06031V11.25C21 11.4489 21.079 11.6397 21.2197 11.7803C21.3603 11.921 21.5511 12 21.75 12C21.9489 12 22.1397 11.921 22.2803 11.7803C22.421 11.6397 22.5 11.4489 22.5 11.25Z"
+                              fill="#15B79F"
+                            />
+                          </svg>
 
                           <div className="flex-none order-2 self-stretch flex-grow-0 h-[22px]">
                             <span className="font-inter font-normal not-italic text-sm tracking-[-0.01em] leading-[22px] text-[#15B79F]">
@@ -381,18 +326,26 @@ function App() {
 
                       <div className="flex-none order-1 flex-grow-1 py-1">
                         <div className="flex flex-row items-center gap-2">
-                          <h6 className=" font-inter font-normal not-italic text-[32px] leading-5 text-[#212636]">
+                          <h2 className=" font-inter font-normal not-italic text-[32px] leading-5 text-[#212636]">
                             $240
-                          </h6>
+                          </h2>
                         </div>
                       </div>
 
                       <div className="flex-none order-1 flex-grow-0">
                         <div className="flex flex-row items-start p-0 gap-2">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M22.5 11.25V5.25C22.5 5.05109 22.421 4.86032 22.2803 4.71967C22.1397 4.57902 21.9489 4.5 21.75 4.5H15.75C15.5511 4.5 15.3603 4.57902 15.2197 4.71967C15.079 4.86032 15 5.05109 15 5.25C15 5.44891 15.079 5.63968 15.2197 5.78033C15.3603 5.92098 15.5511 6 15.75 6H19.9397L12.75 13.1897L9.53062 9.96937C9.46097 9.89964 9.37825 9.84432 9.2872 9.80658C9.19615 9.76884 9.09856 9.74941 9 9.74941C8.90144 9.74941 8.80384 9.76884 8.71279 9.80658C8.62174 9.84432 8.53903 9.89964 8.46937 9.96937L1.71937 16.7194C1.57864 16.8601 1.49958 17.051 1.49958 17.25C1.49958 17.449 1.57864 17.6399 1.71937 17.7806C1.8601 17.9214 2.05097 18.0004 2.25 18.0004C2.44902 18.0004 2.63989 17.9214 2.78062 17.7806L9 11.5603L12.2194 14.7806C12.289 14.8504 12.3717 14.9057 12.4628 14.9434C12.5538 14.9812 12.6514 15.0006 12.75 15.0006C12.8486 15.0006 12.9462 14.9812 13.0372 14.9434C13.1283 14.9057 13.211 14.8504 13.2806 14.7806L21 7.06031V11.25C21 11.4489 21.079 11.6397 21.2197 11.7803C21.3603 11.921 21.5511 12 21.75 12C21.9489 12 22.1397 11.921 22.2803 11.7803C22.421 11.6397 22.5 11.4489 22.5 11.25Z" fill="#15B79F"/>
-</svg>
-
+                          <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M22.5 11.25V5.25C22.5 5.05109 22.421 4.86032 22.2803 4.71967C22.1397 4.57902 21.9489 4.5 21.75 4.5H15.75C15.5511 4.5 15.3603 4.57902 15.2197 4.71967C15.079 4.86032 15 5.05109 15 5.25C15 5.44891 15.079 5.63968 15.2197 5.78033C15.3603 5.92098 15.5511 6 15.75 6H19.9397L12.75 13.1897L9.53062 9.96937C9.46097 9.89964 9.37825 9.84432 9.2872 9.80658C9.19615 9.76884 9.09856 9.74941 9 9.74941C8.90144 9.74941 8.80384 9.76884 8.71279 9.80658C8.62174 9.84432 8.53903 9.89964 8.46937 9.96937L1.71937 16.7194C1.57864 16.8601 1.49958 17.051 1.49958 17.25C1.49958 17.449 1.57864 17.6399 1.71937 17.7806C1.8601 17.9214 2.05097 18.0004 2.25 18.0004C2.44902 18.0004 2.63989 17.9214 2.78062 17.7806L9 11.5603L12.2194 14.7806C12.289 14.8504 12.3717 14.9057 12.4628 14.9434C12.5538 14.9812 12.6514 15.0006 12.75 15.0006C12.8486 15.0006 12.9462 14.9812 13.0372 14.9434C13.1283 14.9057 13.211 14.8504 13.2806 14.7806L21 7.06031V11.25C21 11.4489 21.079 11.6397 21.2197 11.7803C21.3603 11.921 21.5511 12 21.75 12C21.9489 12 22.1397 11.921 22.2803 11.7803C22.421 11.6397 22.5 11.4489 22.5 11.25Z"
+                              fill="#15B79F"
+                            />
+                          </svg>
 
                           <div className="flex-none order-2 self-stretch flex-grow-0 h-[22px]">
                             <span className="font-inter font-normal not-italic text-sm tracking-[-0.01em] leading-[22px] text-[#15B79F]">
@@ -432,18 +385,26 @@ function App() {
 
                       <div className="flex-none order-1 flex-grow-1 py-1">
                         <div className="flex flex-row items-center gap-2">
-                          <h6 className=" font-inter font-normal not-italic text-[32px] leading-5 text-[#212636]">
+                          <h2 className=" font-inter font-normal not-italic text-[32px] leading-5 text-[#212636]">
                             $240
-                          </h6>
+                          </h2>
                         </div>
                       </div>
 
                       <div className="flex-none order-1 flex-grow-0">
                         <div className="flex flex-row items-start p-0 gap-2">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M22.5 11.25V5.25C22.5 5.05109 22.421 4.86032 22.2803 4.71967C22.1397 4.57902 21.9489 4.5 21.75 4.5H15.75C15.5511 4.5 15.3603 4.57902 15.2197 4.71967C15.079 4.86032 15 5.05109 15 5.25C15 5.44891 15.079 5.63968 15.2197 5.78033C15.3603 5.92098 15.5511 6 15.75 6H19.9397L12.75 13.1897L9.53061 9.96937C9.46096 9.89964 9.37824 9.84432 9.2872 9.80658C9.19615 9.76884 9.09855 9.74941 8.99999 9.74941C8.90143 9.74941 8.80383 9.76884 8.71278 9.80658C8.62174 9.84432 8.53902 9.89964 8.46936 9.96937L1.71936 16.7194C1.57863 16.8601 1.49957 17.051 1.49957 17.25C1.49957 17.449 1.57863 17.6399 1.71936 17.7806C1.8601 17.9214 2.05097 18.0004 2.24999 18.0004C2.44901 18.0004 2.63988 17.9214 2.78061 17.7806L8.99999 11.5603L12.2194 14.7806C12.289 14.8504 12.3717 14.9057 12.4628 14.9434C12.5538 14.9812 12.6514 15.0006 12.75 15.0006C12.8486 15.0006 12.9461 14.9812 13.0372 14.9434C13.1282 14.9057 13.211 14.8504 13.2806 14.7806L21 7.06031V11.25C21 11.4489 21.079 11.6397 21.2197 11.7803C21.3603 11.921 21.5511 12 21.75 12C21.9489 12 22.1397 11.921 22.2803 11.7803C22.421 11.6397 22.5 11.4489 22.5 11.25Z" fill="#15B79F"/>
-</svg>
-
+                          <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M22.5 11.25V5.25C22.5 5.05109 22.421 4.86032 22.2803 4.71967C22.1397 4.57902 21.9489 4.5 21.75 4.5H15.75C15.5511 4.5 15.3603 4.57902 15.2197 4.71967C15.079 4.86032 15 5.05109 15 5.25C15 5.44891 15.079 5.63968 15.2197 5.78033C15.3603 5.92098 15.5511 6 15.75 6H19.9397L12.75 13.1897L9.53061 9.96937C9.46096 9.89964 9.37824 9.84432 9.2872 9.80658C9.19615 9.76884 9.09855 9.74941 8.99999 9.74941C8.90143 9.74941 8.80383 9.76884 8.71278 9.80658C8.62174 9.84432 8.53902 9.89964 8.46936 9.96937L1.71936 16.7194C1.57863 16.8601 1.49957 17.051 1.49957 17.25C1.49957 17.449 1.57863 17.6399 1.71936 17.7806C1.8601 17.9214 2.05097 18.0004 2.24999 18.0004C2.44901 18.0004 2.63988 17.9214 2.78061 17.7806L8.99999 11.5603L12.2194 14.7806C12.289 14.8504 12.3717 14.9057 12.4628 14.9434C12.5538 14.9812 12.6514 15.0006 12.75 15.0006C12.8486 15.0006 12.9461 14.9812 13.0372 14.9434C13.1282 14.9057 13.211 14.8504 13.2806 14.7806L21 7.06031V11.25C21 11.4489 21.079 11.6397 21.2197 11.7803C21.3603 11.921 21.5511 12 21.75 12C21.9489 12 22.1397 11.921 22.2803 11.7803C22.421 11.6397 22.5 11.4489 22.5 11.25Z"
+                              fill="#15B79F"
+                            />
+                          </svg>
 
                           <div className="flex-none order-2 self-stretch flex-grow-0 h-[22px]">
                             <span className="font-inter font-normal not-italic text-sm tracking-[-0.01em] leading-[22px] text-[#15B79F]">
@@ -456,6 +417,169 @@ function App() {
                         </div>
                       </div>
                     </div>
+                  </div>
+                </div>
+                <div className="flex flex-col items-start px-6 pt-8 pb-4 w-full h-auto">
+                  <div className="flex-none order-2 self-stretch flex-grow-0">
+                    <div className="flex flex-row items-start p-0 gap-6 h-[38px]">
+                      <h2 className="font-inter font-medium text-[32px] tracking-tight leading-8 text-[#212636] tracking-[-0.02em]">
+                        Insights
+                      </h2>
+                    </div>
+                  </div>
+                </div>
+                <div className="py-8 px-6 w-full h-auto">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+                    <div className="col-span-1 md:col-span-2 p-6 gap-6 shadow-custom rounded-[20px]">
+                      <div className="flex flex-row items-center gap-2">
+                        <svg
+                          width="10"
+                          height="10"
+                          viewBox="0 0 10 10"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M9.875 4.8125C9.87364 6.05528 9.37934 7.24677 8.50056 8.12556C7.62177 9.00434 6.43028 9.49864 5.1875 9.5H1.23453C1.0398 9.49975 0.853111 9.42228 0.715413 9.28459C0.577716 9.14689 0.500248 8.9602 0.5 8.76547V4.8125C0.5 3.5693 0.99386 2.37701 1.87294 1.49794C2.75201 0.61886 3.9443 0.125 5.1875 0.125C6.4307 0.125 7.62299 0.61886 8.50206 1.49794C9.38114 2.37701 9.875 3.5693 9.875 4.8125Z"
+                            fill="#667085"
+                          />
+                        </svg>
+                        <span className="font-inter font-semibold not-italic text-xs leading-[30px] tracking-[0.5px] uppercase text-[#667085]">
+                          Consultations
+                        </span>
+                      </div>
+                      <div className="flex flex-col justifty-center items-start p-0 gap-4 w-full">
+                        <div className="flex order-1 flex-grow-1 overflow-auto">
+                          <Suspense fallback={<div>Loading...</div>}>
+                          <ConsultationsChart />
+                          </Suspense>
+                        </div>
+                        <div className="border border-[#DCDFE4] flex-none order-1 self-stretch flex-grow-0"></div>
+                        <div className="flex order-2 flex-col md:flex-row flex-wrap items-start p-0 md:gap-4">
+                          <div className="flex flex-row items-center py-2 px-0 space-x-2">
+                            <span className="w-5 h-1 border-2 border-gray-400"></span>
+                            <span className="font-inter font-normal text-xs leading-[19.92px] text-[#667085]">
+                              Incoming
+                            </span>
+                          </div>
+                          <div className="flex flex-row items-center py-2 px-0 gap-2">
+                            <svg
+                              width="16"
+                              height="4"
+                              viewBox="0 0 16 4"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <rect
+                                width="16"
+                                height="4"
+                                rx="2"
+                                fill="#15B79F"
+                              />
+                            </svg>
+                            <span className="font-inter font-normal text-xs leading-[19.92px] text-[#667085]">
+                              Answered
+                            </span>
+                          </div>
+                          <div className="flex flex-row items-center py-2 px-0 gap-2">
+                            <svg
+                              width="16"
+                              height="4"
+                              viewBox="0 0 16 4"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <rect
+                                width="16"
+                                height="4"
+                                rx="2"
+                                fill="#FFE587"
+                              />
+                            </svg>
+                            <span className="font-inter font-normal text-xs leading-[19.92px] text-[#667085]">
+                              Experts online
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-span-1 p-6 gap-6 w-full shadow-custom rounded-[20px]">
+                      <div className="flex-none order-1 flex-grow-0 w-full">
+                        <div className="flex flex-row items-center gap-2">
+                          <svg
+                            width="12"
+                            height="12"
+                            viewBox="0 0 12 12"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M10.875 9.75C10.875 9.84946 10.8355 9.94484 10.7652 10.0152C10.6948 10.0855 10.5995 10.125 10.5 10.125H1.5C1.40054 10.125 1.30516 10.0855 1.23483 10.0152C1.16451 9.94484 1.125 9.84946 1.125 9.75C1.125 9.65054 1.16451 9.55516 1.23483 9.48483C1.30516 9.41451 1.40054 9.375 1.5 9.375H1.875V6.375C1.875 6.27554 1.91451 6.18016 1.98484 6.10983C2.05516 6.03951 2.15054 6 2.25 6H3.375C3.47446 6 3.56984 6.03951 3.64016 6.10983C3.71049 6.18016 3.75 6.27554 3.75 6.375V9.375H4.5V4.125C4.5 4.02554 4.53951 3.93016 4.60984 3.85984C4.68016 3.78951 4.77554 3.75 4.875 3.75H6.375C6.47446 3.75 6.56984 3.78951 6.64017 3.85984C6.71049 3.93016 6.75 4.02554 6.75 4.125V9.375H7.5V1.875C7.5 1.77554 7.53951 1.68016 7.60983 1.60984C7.68016 1.53951 7.77554 1.5 7.875 1.5H9.75C9.84946 1.5 9.94484 1.53951 10.0152 1.60984C10.0855 1.68016 10.125 1.77554 10.125 1.875V9.375H10.5C10.5995 9.375 10.6948 9.41451 10.7652 9.48483C10.8355 9.55516 10.875 9.65054 10.875 9.75Z"
+                              fill="#667085"
+                            />
+                          </svg>
+
+                          <span className="font-inter font-semibold not-italic text-xs leading-[30px] tracking-[0.5px] uppercase text-[#667085]">
+                            VS PAST PERIOD
+                          </span>
+                        </div>
+                        <div className="flex flex-col justify-center items-center p-0 gap-4 w-full">
+                          <Suspense fallback={<div>Loading Chart...</div>}>
+                            <MyChart />
+                          </Suspense>
+                        </div>
+                        <div className="border border-[#DCDFE4] mb-5 flex-none order-0 flex-grow-0"></div>
+                        <div className="flex flex-col md:flex-row justify-start items-start md:items-center flex-wrap md:w-max p-0 md:gap-4">
+                          <div className="flex flex-row items-center py-2 px-0 space-x-2">
+                            <svg
+                              width="16"
+                              height="4"
+                              viewBox="0 0 16 4"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="flex"
+                            >
+                              <rect
+                                width="16"
+                                height="4"
+                                rx="2"
+                                fill="#15B79F"
+                              />
+                            </svg>
+                            <span className="font-inter font-normal text-xs leading-[19.92px] text-[#667085]">
+                              Consultations
+                            </span>
+                          </div>
+                          <div className="flex flex-row items-center py-2 px-0 space-x-2">
+                            <span className="w-5 h-1 border-2 border-gray-400"></span>
+                            <span className="font-inter font-normal text-xs leading-[19.92px] text-[#667085]">
+                              Orders closed
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-span-1 p-6 space-y-6 isolate bg-gradient-to-b from-[#15B79F] to-[#0E9382] shadow-custom rounded-[20px] w-full">
+                      <Suspense fallback={<div>Loading Forecast...</div>}>
+                        <Forecast />
+                      </Suspense>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex flex-col items-start px-6 pt-8 pb-4 w-full h-auto">
+                  <div className="flex-none order-2 self-stretch flex-grow-0">
+                    <div className="flex flex-row items-start p-0 gap-6 h-[38px]">
+                      <h2 className="font-inter font-medium text-[32px] tracking-tight leading-8 text-[#212636] tracking-[-0.02em]">
+                        Orders
+                      </h2>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex flex-row justify-content items-start py-8 px-6 gap-6 w-full">
+                  <div className="flex-none order-5 self-stretch flex-grow-0 w-full">
+                    <Suspense fallback={<div>Loading Orders...</div>}>
+                      <Orders />
+                    </Suspense>
                   </div>
                 </div>
               </div>
