@@ -9,37 +9,37 @@ const MyChart = () => {
 
     const options = {
       tooltip: {
-        //   trigger: 'axis',
-        //   axisPointer: {
-        //     type: 'cross',
-        //     crossStyle: {
-        //       color: '#999'
-        //     }
-        //   }
-      },
-      toolbox: {
-        // feature: {
-        //   // dataView: { show: true, readOnly: false },
-        //   // magicType: { show: true, type: ['line', 'bar'] },
-        //   // restore: { show: true },
-        //   // saveAsImage: { show: true }
+        // trigger: "axis",
+        // axisPointer: {
+        //   type: "cross",
+        //   crossStyle: {
+        //     color: "#999",
+        //   },
         // },
       },
-      //   legend: {
-      //     data: ['Consultations', 'Orders closed' ],
-      //     orient: 'horizontal', //horizontal orientation
-      //     bottom: 0,
-      //     textStyle: {
-      //         color: '#667085'
-      //     },
-      //     itemStyle: {
-      //         backgroundColor: (params) => {
-      //             const iconColors = ['#134E48', '#CCFBEF'];
-      //             return iconColors[params.dataIndex]
-      //         }
-      //     },
-
+      toolbox: {
+        feature: {
+          //   dataView: { show: true, readOnly: false },
+          //   magicType: { show: true, type: ['line', 'bar'] },
+          //   restore: { show: true },
+          //   saveAsImage: { show: true }
+        },
+      },
+      // legend: {
+      //   data: ['Consultations', 'Orders closed' ],
+      //   orient: 'horizontal', //horizontal orientation
+      //   bottom: 0,
+      //   textStyle: {
+      //       color: '#667085'
       //   },
+      //   itemStyle: {
+      //     borderColor: (params) => {
+      //           const colors = ['#134E48', '#CCFBEF'];
+      //           return colors[params.dataIndex]
+      //       }
+      //   },
+
+      // },
       xAxis: [
         {
           type: "category",
@@ -52,19 +52,23 @@ const MyChart = () => {
           },
           splitLine: {
             show: false,
+            lineDash: [1, 2],
           },
         },
       ],
       yAxis: [
         {
           type: "value",
-          name: "",
-          min: 10,
-          max: 20,
-          //   interval: 10,
+            // name: "VS PAST PERIOD",
+          min: 0,
+          max: 30,
+            interval: 10,
           axisLabel: {
-            formatter: "{value}",
+            formatter: '{value}',
+        
+            // rotate: 45, 
           },
+          hideOverlap: false,
           axisLine: {
             show: false, // Show the y-axis line (optional)
           },
@@ -82,8 +86,11 @@ const MyChart = () => {
               return value;
             },
           },
-          data: [25.5, 18.5],
-          barWidth: "30px",
+          data: [25, 18.5],
+          //   barWidth: "32px",
+          //   barGap: "15%",
+          barMinHeight: 150,
+          //   barCategoryGap: "40%",
           itemStyle: {
             color: (params) => {
               const colors = ["#CCFBEF", "#CCFBEF"];
@@ -100,8 +107,11 @@ const MyChart = () => {
               return value;
             },
           },
-          data: [19, 18],
-          barWidth: "30px",
+          data: [19, 10],
+          //   barWidth: "32px",
+          //   barGap: "10%",
+          barMinHeight: 100,
+          //   barCategoryGap: "50%",
           itemStyle: {
             color: (params) => {
               const colors = ["#134E48", "#134E48"];
@@ -109,7 +119,7 @@ const MyChart = () => {
             },
             borderRadius: [5, 5, 0, 0],
           },
-         },
+        },
       ],
     };
 
@@ -129,11 +139,13 @@ const MyChart = () => {
   }, []);
 
   return (
+    // <div className="">
     <div
       ref={chartRef}
-      style={{ width: "100%", height: "300px", maxHeight: '300px', margin: "0 auto" }}
-        className="flex md:items-center"
+      style={{ width: "100%", height: "350px",  }}
+      className="flex ml-4 justify-center"
     />
+    // </div>
   );
 };
 
